@@ -1,0 +1,42 @@
+services:
+  db:
+    image: postgres:15-alpine
+    restart: "no"
+
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ../init-scripts:/docker-entrypoint-initdb.d
+
+    networks:
+      - ai_assistant_network
+
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+
+    volumes:
+      - ..:/workspace:cached
+
+    env_file:
+      - ../.env
+
+    networks:
+      - ai_assistant_network
+
+    command: sleep infinity
+
+volumes:
+  postgres_data:
+
+networks:
+  ai_assistant_network:
+    driver: bridge

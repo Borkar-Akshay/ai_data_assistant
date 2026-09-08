@@ -1,0 +1,23 @@
+{
+    "name": "AI Data Assistant",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/workspace",
+    "runServices": ["db"],
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "editor.tabSize": 4,
+                "editor.insertSpaces": true,
+                "editor.detectIndentation": false,
+                "[python]": {
+                    "editor.tabSize": 4,
+                    "editor.insertSpaces": true
+                },
+                "autopep8.args": ["--indent-size=4"]
+            }
+        }
+    },
+    "postCreateCommand": "pip install --user -r requirements.txt",
+    "remoteUser": "vscode"
+}
